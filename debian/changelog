@@ -1,0 +1,5 @@
+python-happybase (0.4-1) experimental; urgency=low
+
+  * Initial release. (Closes: #XXXXXX)
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 19 Mar 2013 21:44:20 +0800

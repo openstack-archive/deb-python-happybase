@@ -1,0 +1,616 @@
+commit 86fd1fdaba228e8fcf66a5d17dec2fbb3beb253a
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed Jul 11 22:56:18 2012 +0200
+
+    Prepare for 0.4 release
+
+commit 3151f1691ec73ceef00642e31246fece25a4a64a
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed Jul 11 22:49:51 2012 +0200
+
+    Update NEWS
+
+commit b3b1dee3470957ce97ad47f1dacdcdcb66d8d22f
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed Jul 11 22:48:17 2012 +0200
+
+    Fix warnings from pep8
+
+commit fea12e70c2d24a5a4072712a5008dbde2ce5fe2f
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed Jul 11 22:44:38 2012 +0200
+
+    Mention 'transport' arg to Connection() in tutorial
+    
+    See issue #6.
+
+commit 9528b67c79946954b8c181ebbafa2590987f3df4
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed Jul 11 22:42:07 2012 +0200
+
+    Support framed Thrift transports in Connection constructor
+    
+    The Connection constructor now features 'transport' parameter that
+    specifies the Thrift transport to use. Fixes issue #6.
+
+commit 6dcd4863bc106922da47c811e2fc351487f68166
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue Jul 10 00:41:34 2012 +0200
+
+    Initial support for framed Thrift transports
+    
+    See issue #6.
+    
+    Add initial support for TFramedTransport in addition to
+    TBufferedTransport. This means HappyBase can connect to the different
+    Thrift server implementations in HBase 0.94.x. This is required for the
+    nonblocking, threadedselector, and hsha implementation. The threadpool
+    implementation requires TBufferedTransport.
+    
+    This change is not exposed in the API yet.
+
+commit 0e7805a0ff8ca25a3eff357a360ca9161caae53b
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue Jun 12 00:38:24 2012 +0200
+
+    Minor docs update
+
+commit 9469488784b5ab01b9dcb98c16b88f2b75987e25
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue Jun 5 22:24:18 2012 +0200
+
+    Add note about always using byte strings in tutorial
+
+commit 01d2a1d9f51a67eb3c1f78357505c393429f9483
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue Jun 5 22:12:42 2012 +0200
+
+    Expand development docs
+
+commit d723ec7f1a744fa65b2952784023289b4f3e2e02
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue Jun 5 21:59:36 2012 +0200
+
+    Condense the introduction chapter a bit
+
+commit 747f01846cfb488c803d4ec1a82ad7b3bffbd379
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue Jun 5 21:58:37 2012 +0200
+
+    Add some links to the README file
+
+commit fe11c9a3905cf1671312986552d23b3773ed0677
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Mon Jun 4 22:09:58 2012 +0200
+
+    Add issue reference in NEWS
+
+commit 45db2b5d87dfd25a8f7ecdfd6a1d4b060b8ff42d
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Mon Jun 4 22:05:20 2012 +0200
+
+    Add table_prefix_separator argument to Connection()
+    
+    Also cleanup error handling in the constructor. Closes issue #3.
+
+commit c524115afdb126d12c59d52deb3cc0f8445f78f0
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 31 01:09:28 2012 +0200
+
+    Use requirements.txt for install_requires in setup.py
+
+commit 1e05b9e41bfbea6a56afccc0511fd1a9cc0f7296
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 31 00:23:35 2012 +0200
+
+    Add requirements file for development dependencies
+
+commit 3788bcbbe580a19baf4570fde3ca28268132ebb6
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 31 00:02:40 2012 +0200
+
+    Add missing docstring
+
+commit dbece90998df01435a66e7a16ad5f940ef0847f9
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 30 23:54:28 2012 +0200
+
+    Minor doc changes
+
+commit 4e5c40e134e97dbf9fa1028a690167d11bf77b8f
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 30 23:47:56 2012 +0200
+
+    Include Apache license conditions (for the HBase parts)
+
+commit 6ee2ee79202ce2d8a64d076e93f91a26e94fee9f
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 30 23:28:05 2012 +0200
+
+    Update NEWS
+
+commit 1609e32ec95ba4e427183cb8dcff7370e8a4aa04
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 30 23:26:36 2012 +0200
+
+    Some tutorial updates
+
+commit 59e9239be04726f309ac8bb19e82413dddfe4457
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 30 22:05:27 2012 +0200
+
+    Mention the 'compat' parameter to Connection() in the tutorial
+
+commit 8306e6415e97018114daac6085034158959abdda
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 30 00:38:00 2012 +0200
+
+    Minor tutorial update
+
+commit 89a0d5df612cc7656e7968dfc78cec3c97dbbb65
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Fri May 25 23:47:11 2012 +0200
+
+    Add external links to documentation index page
+
+commit 54f8616e8b3b5ff424e379967fe7b35f32c4405c
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Fri May 25 00:13:44 2012 +0200
+
+    Fix typo in release notes
+
+commit 08ee98b373ed5b76a922b5a4211eba3544676609
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Fri May 25 00:11:55 2012 +0200
+
+    No longer include NEWS in package description
+    
+    The HappyBase PyPI page doesn't like it, it seems.
+
+commit 49943a8525bf22722e28498ed3fc1ae3bd10d876
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Fri May 25 00:10:17 2012 +0200
+
+    Post-release version bump
+
+commit a4868ef99ec844bfbd4cf8b8443b60cd3f0e01d6
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Fri May 25 00:06:26 2012 +0200
+
+    Update NEWS for 0.3
+
+commit 2541838a3e579771e23c83eadda59af16a699fac
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Fri May 25 00:05:02 2012 +0200
+
+    Prepare for 0.3 release
+
+commit fad8bb6f11525b2113111b4dd58f5e149d4b3f01
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Fri May 25 00:04:10 2012 +0200
+
+    Rename helper function in setup.py
+
+commit 8116d576ff1ce96b0cb6eb9a9415c1814ef710b4
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Fri May 25 00:03:10 2012 +0200
+
+    Make _version module semi-private
+
+commit 6c03bdd8d424abe71895115a2260b47f872661ec
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Fri May 25 00:00:09 2012 +0200
+
+    Include NEWS in package description
+
+commit 613b387d7c3dd034530b3411e25ab8c91941c28b
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 24 23:58:01 2012 +0200
+
+    Update NEWS
+
+commit 9607052ae9f9ccfc2c76d83acceaf838ebb7841e
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 24 23:37:29 2012 +0200
+
+    Add API documentation about the 'compat' parameter
+
+commit 7875976183c50b0fdb64910b438e89c65883f8eb
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 24 15:33:06 2012 +0200
+
+    Mention compatibility tests in development docs
+
+commit 0a213d44b54553249d87a33806772ef5e6d91b58
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 24 14:27:55 2012 +0200
+
+    Hit all scanner code paths for 0.90 compatibility tests
+
+commit 6a7efd75fcc954046cf978b426dec51b09c5fc56
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 24 14:23:19 2012 +0200
+
+    Use HAPPYBASE_COMPAT env var to run compatibility tests
+    
+    ...by lack of better way to do it.
+
+commit f0fd97af1b1b04ea7c7cf806b149097f82ba04fd
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 24 14:11:28 2012 +0200
+
+    Ignore build/ directory
+
+commit 684b952fffab6363cb3b8b485dfa526b3721fef4
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 24 14:11:09 2012 +0200
+
+    Update NEWS
+
+commit b1a0c7f14e32a846388c69dce2add825a966c089
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 24 14:10:47 2012 +0200
+
+    Don't install the tests module
+
+commit 49c6a4197f6417a69934f3023dbfa07b4ee1ea8a
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 24 13:28:30 2012 +0200
+
+    Implement partial scanner API for HBase 0.90 compat mode
+
+commit 08dc2fc3a09e9ad1bf3780bc0dbb9db6d21a5bc1
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Thu May 24 09:21:29 2012 +0200
+
+    Correctly raise exception for invalid compat modes
+
+commit ea9960890682d109f41b1ef418da3607b72296ca
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 23 18:10:05 2012 +0200
+
+    Raise NotImplementedError for Table.scan() in 0.90 compat mode
+    
+    The Thrift API is limited, and this at least avoids low level exceptions
+    with ugly backtraces that give no clue at all what the real problem is.
+
+commit d9f0a59a661ba7c8e304c1f766fa6b30e6bd96dc
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 23 18:02:05 2012 +0200
+
+    Initial steps for HBase/Thrift compatibility modes
+
+commit 4bb750cf705862781d6f6a32ae02d76bc3c2f21c
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 23 17:42:26 2012 +0200
+
+    Update NEWS
+
+commit b7c2fb2b8b484fe5741741ac0f36ccee904094b5
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 23 17:36:41 2012 +0200
+
+    Avoid limited scannerOpenWithPrefix() Thrift API
+    
+    Avoid the scannerOpenWithPrefix() Thrift function by implementing the
+    prefix matching logic on the client side, and using scannerOpenWithScan
+    afterwards. The result is that prefix scans now support both 'timestamp'
+    and 'filter' parameters, whereas that raised NotImplementedError before.
+
+commit e84aca22e6f2996bc140bed1448edb546c10975b
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 23 17:22:44 2012 +0200
+
+    Implement a str_increment() utility function
+
+commit 7fc18115414c91ea97b8be706eb2f204c1081bf9
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Wed May 23 00:02:24 2012 +0200
+
+    Update README
+
+commit f469836150d02c59d5e076013d889098e5520fe8
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 23:40:00 2012 +0200
+
+    Lower Thrift dependency to 0.6.0
+    
+    The unit tests still pass with 0.6.0.
+
+commit 41c083e98e5d05bbca57e8dae4b4ee004cc253f9
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 23:24:31 2012 +0200
+
+    Require at least Thrift 0.7, not exactly that version
+
+commit d871fb6523cfe00a387074bb53657c9b22a8e95c
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 23:22:54 2012 +0200
+
+    Lower Thrift dependency to 0.7.0
+    
+    The unit tests still pass with 0.7.0.
+
+commit 8e5f723a06d7cab4ebfb67122bbabfc601d8e973
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 23:22:35 2012 +0200
+
+    Add Makefile target to create a dist
+
+commit 9cddacff2c30591ce63bcbe90e14e4d1364daef2
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 23:14:03 2012 +0200
+
+    Describe how to run tests in the development docs
+
+commit 01f643bee6f71f1af1a52ecd06170b8a1f0ef578
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 22:08:17 2012 +0200
+
+    Increase version to 0.3dev
+
+commit 0e7fb7aeb49533594c2f1b46cc6b06549f377295
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 22:04:50 2012 +0200
+
+    Update NEWS
+
+commit 1317dc9ea5eede2140c2b0084e45f23d8340b828
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 22:01:15 2012 +0200
+
+    Properly document return types in API docs
+
+commit 429b12444ed1e7fdd380c2938b5fcf268e1523f7
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 21:34:33 2012 +0200
+
+    Mention version requirements in scan() API docs
+    
+    Mention in the docs that Table.scan() uses the scannerOpenWithScan()
+    Thrift function.
+
+commit 9bce71cb4d601206b55fd13d49c88fff18383556
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 21:24:34 2012 +0200
+
+    Use map() instead of a list comprehension
+    
+    ...to be consistent with other parts of the code.
+
+commit a267403967356cf3256c3f278a3e6c13aa4cd457
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 21:17:02 2012 +0200
+
+    Small improvements to the table.cells() API docs
+
+commit 1929111e25861a54f8e2a593ac30b37bb80a9ca5
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 01:24:20 2012 +0200
+
+    Prepare for 0.2 release
+
+commit 77635e0d65d05cbd3cf898ef5dc0a1404ba9403e
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 01:18:41 2012 +0200
+
+    Add NEWS.rst with version history; include in docs
+
+commit 10f167185bf6426e4f77ec7f5f438b45e8a3d6bf
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 01:13:56 2012 +0200
+
+    Move license header to top level LICENSE.rst
+
+commit 6e11baeab63ad2d32fec2709adb1ae61dd417cd4
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 01:09:53 2012 +0200
+
+    Add sphinx to requirements.txt
+
+commit 098d6362eb835cc5f4f4c8d5782df8e47fd8d5f0
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 01:02:30 2012 +0200
+
+    Some tutorial cleanups
+
+commit 3cc2ce5144c6149f85010d7c4b9cebea77a70f7c
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:55:50 2012 +0200
+
+    Use rubric headers for the "next steps" headings
+
+commit 05f021d488ee691e240531d230f9e3904f04a147
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:53:37 2012 +0200
+
+    Minor wording improvements in installation docs
+
+commit f86b1eccf69198dd4a9335cc9a6cd4271beef967
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:51:59 2012 +0200
+
+    Doc tweaks
+
+commit 70cecd68eb3dae5423ce8dbc82d246876a907a95
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:48:15 2012 +0200
+
+    Add development chapter to docs
+
+commit d2bb370dbdad9d258561c28f8160cf2261aff3c7
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:45:39 2012 +0200
+
+    Show a file:// URL after generating the docs
+    
+    This makes it easy to open a browser by opening the link from a terminal
+    window.
+
+commit 9180933d928af3fbe96439267622b69c7d6ecdd6
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:44:01 2012 +0200
+
+    Point to docs in README
+
+commit a57985324154bbccf0dceeb0041c0abfaa3b313c
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:43:19 2012 +0200
+
+    Load version info correctly in docs config
+
+commit 9999cc89c962ba52b43e4d0d5dcddc385c923f92
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:32:04 2012 +0200
+
+    Minor tutorial changes
+
+commit ae47d778dafffe11ac9d140a220d2c304bdd0872
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:25:28 2012 +0200
+
+    Cleanup version module
+
+commit 483afacd316800f4a1a4c23d837618661900b5c5
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:24:37 2012 +0200
+
+    Update installation guide
+
+commit 15f7ffe2a346e9574c5fa39adb47271baee90370
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Tue May 22 00:20:33 2012 +0200
+
+    No longer include the README.rst in the docs
+    
+    Instead, copy the one line summary.
+
+commit 5366974acea25ff25cd4c6ce85f6fcd42cf00795
+Author: Todd DeLuca <no-spam@todddeluca.com>
+Date:   Mon May 21 15:24:22 2012 -0400
+
+    Use happybase.version in __init__ to stay DRY.
+
+commit 63573cdaefe3a2b98ece87e19d9ceb18f00bc0d9
+Author: Todd DeLuca <no-spam@todddeluca.com>
+Date:   Mon May 21 15:12:09 2012 -0400
+
+    Remove package import for version to fix install.
+    
+    A common way to break project installation is to import the package in
+    setup.py in order to get access to mypackage.__version__.  However if
+    mypackage depends on a different uninstalled package, the import will
+    fail, causing setup.py to fail before it has a chance to install the
+    dependency.
+    
+    The fix is to find some other DRY way to get at __version__.
+    
+    For more details see:
+    
+    - http://stackoverflow.com/questions/458550/
+    - http://stackoverflow.com/questions/2058802/
+
+commit e919a4d849638c82689ce4452391f7d4f30da671
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Mon May 21 00:00:32 2012 +0200
+
+    Update installation guide
+    
+    For some reason "pip install happybase" doesn't pull in Thrift
+    automagically... :(
+
+commit f9b5cffc91aeab6c2c1e3efcbe27d3dca447321d
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 23:39:38 2012 +0200
+
+    Comment out unused parts of Sphinx docs config
+
+commit b7236cb1972aa9420f6b2a74cd7f4097845d3982
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 23:34:29 2012 +0200
+
+    Include requirements.txt in sdist
+
+commit 420ff1e15c09cb443462470b672585060c466c42
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 23:33:20 2012 +0200
+
+    Update installation guide
+
+commit c0ae5940a15fd28a4918453e2d89652acb375267
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:55:51 2012 +0200
+
+    Include thrift in install_requires
+
+commit fcf07e1050fb813f9d4f703f440bf90aff125a71
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:49:12 2012 +0200
+
+    Update ignore pattern
+
+commit 2500bc5bbedfc8f4b91729ab098c6b98125a93b5
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:41:52 2012 +0200
+
+    Update ignore patterns
+
+commit bf3a00dc839e2df295504a93eb5fdda6a4596924
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:39:25 2012 +0200
+
+    Make HappyBase a proper Python distribution
+
+commit ae4b7e44eaeb709150b1e50eda4239b581a8e37d
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:31:17 2012 +0200
+
+    Add ignore patterns
+
+commit 147f4da423e393a54da006627c83cfc677e3149b
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:30:33 2012 +0200
+
+    Point to docs in README
+
+commit de4b0ab0b96d34b859b25a5ebf9999e8150acdba
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:28:14 2012 +0200
+
+    Add documentation
+
+commit e7b271b460d3fea05a5e5e1d6ec76e112f454fb4
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:27:51 2012 +0200
+
+    Add LICENSE information
+
+commit 25be8c0c58481a672a1fbe685514e12f61456674
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:27:20 2012 +0200
+
+    Add happybase.__version__ attribute
+
+commit c7fc5c9f4211f9c9fe1287b645100384e333ede7
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:17:11 2012 +0200
+
+    Add requirements file (for pip)
+
+commit 6ad079e9e6ec044dea7a672a0372c6ea58b139dc
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:13:57 2012 +0200
+
+    Add unit tests (requires nose)
+
+commit f806fdf92755f227ca88dba3ae2b28477a26f531
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:12:20 2012 +0200
+
+    Add happybase module
+
+commit 6631068d9f7d1aca067f6dbcf901c67115aa32d0
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:   Sun May 20 22:07:07 2012 +0200
+
+    Add README

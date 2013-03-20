@@ -22,7 +22,7 @@ Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
 Depends: ${python:Depends}, ${misc:Depends}
 Recommends: ${python:Recommends}
-Description: A developer-friendly Python library to interact with Apache HBase
+Description: developer-friendly Python library to interact with Apache HBase
  HappyBase is a developer-friendly Python library to interact with Apache HBase.
   * Documentation: http://happybase.readthedocs.org/
   * HBase: http://hbase.apache.org/

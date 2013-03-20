@@ -11,6 +11,7 @@ Build-Depends: debhelper (>= 9), python-setuptools, python-all (>= 2.6.6-3~), op
 Build-Depends-Indep: python-coverage,
  python-nose,
  python-nosexcover,
+ python-sphinx,
  python-thrift
 Standards-Version: 3.9.4
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=openstack/python-happybase.git

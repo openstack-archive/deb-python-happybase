@@ -6,8 +6,16 @@ UPSTREAM_GIT = git://github.com/wbolster/happybase.git
 
 include /usr/share/openstack-pkg-tools/pkgos.make
 
+PYTHONS:=$(shell pyversions -vr)
+
 %:
 	dh $@  --with python2
+
+override_dh_auto_install:
+	set -e && for pyvers in $(PYTHONS); do \
+		python$$pyvers setup.py install --install-layout=deb \
+		--root $(CURDIR)/debian/python-happybase; \
+	done
 
 override_dh_auto_test:
 	echo "Tests disabled: FIXME!"

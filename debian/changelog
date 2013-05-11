@@ -1,3 +1,9 @@
+python-happybase (0.4-4) unstable; urgency=low
+
+  * Uploading to unstable.
+
+ -- Thomas Goirand <zigo@debian.org>  Sat, 11 May 2013 04:59:48 +0000
+
 python-happybase (0.4-3) experimental; urgency=low
 
   * Added missing licensing information for the Hbase things.

@@ -7,12 +7,15 @@ Uploaders: Loic Dachary (OuoU) <loic@debian.org>,
            Thomas Goirand <zigo@debian.org>,
            Ghe Rivero <ghe.rivero@stackops.com>,
            Mehdi Abaakouk <sileht@sileht.net>
-Build-Depends: debhelper (>= 9), python-setuptools, python-all (>= 2.6.6-3~), openstack-pkg-tools
+Build-Depends: debhelper (>= 9),
+               openstack-pkg-tools,
+               python-all (>= 2.6.6-3~),
+               python-setuptools
 Build-Depends-Indep: python-coverage,
- python-nose,
- python-nosexcover,
- python-sphinx,
- python-thrift
+                     python-nose,
+                     python-nosexcover,
+                     python-sphinx,
+                     python-thrift
 Standards-Version: 3.9.4
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=openstack/python-happybase.git
 Vcs-Git: git://anonscm.debian.org/openstack/python-happybase.git
@@ -21,7 +24,7 @@ Homepage: https://github.com/wbolster/happybase
 Package: python-happybase
 Architecture: all
 Pre-Depends: dpkg (>= 1.15.6~)
-Depends: ${python:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${python:Depends}
 Recommends: ${python:Recommends}
 Description: developer-friendly Python library to interact with Apache HBase
  HappyBase is a developer-friendly Python library to interact with Apache HBase.

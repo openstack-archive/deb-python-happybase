@@ -1,11 +1,11 @@
-*****************
-API documentation
-*****************
+=============
+API reference
+=============
 
 .. py:currentmodule:: happybase
 
 This chapter contains detailed API documentation for HappyBase. It is suggested
-to read the :doc:`tutorial <tutorial>` first to get a general idea about how
+to read the :doc:`user guide <user>` first to get a general idea about how
 HappyBase works.
 
 The HappyBase API is organised as follows:
@@ -25,6 +25,10 @@ The HappyBase API is organised as follows:
    The :py:class:`Batch` class implements the batch API for data manipulation,
    and is available through the :py:meth:`Table.batch()` method.
 
+:py:class:`~happybase.ConnectionPool`:
+   The :py:class:`ConnectionPool` class implements a thread-safe connection
+   pool that allows an application to (re)use multiple connections.
+
 
 Connection
 ==========
@@ -42,6 +46,14 @@ Batch
 =====
 
 .. autoclass:: happybase.Batch
+
+
+Connection pool
+===============
+
+.. autoclass:: happybase.ConnectionPool
+
+.. autoclass:: happybase.NoConnectionsAvailable
 
 
 .. vim: set spell spelllang=en:

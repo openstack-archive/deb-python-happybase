@@ -1,34 +1,91 @@
-*********
+=========
 HappyBase
-*********
+=========
 
-**HappyBase** is a developer-friendly `Python <http://python.org/>`_ library to
-interact with `Apache HBase <http://hbase.apache.org/>`_.
+.. py:currentmodule:: happybase
+
+**HappyBase** is a developer-friendly Python__ library to interact with `Apache
+HBase`__. HappyBase is designed for use in standard HBase setups, and offers
+application developers a Pythonic API to interact with HBase. Below the surface,
+HappyBase uses the `Python Thrift library`__ to connect to HBase using its
+Thrift__ gateway, which is included in the standard HBase 0.9x releases.
+
+__ http://python.org/
+__ http://hbase.apache.org/
+__ http://pypi.python.org/pypi/thrift
+__ http://thrift.apache.org/
 
 
-.. rubric:: Contents of this documentation
+.. note::
+
+   **Do you enjoy HappyBase?** Please consider making a small donation__ to let
+   me know you appreciate my work. Thanks!
+
+   __ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZJ9U8DNN6KZ9Q
+
+
+Example
+=======
+
+The example below illustrates basic usage of the library. The :doc:`user guide
+<user>` contains many more examples.
+
+::
+
+   import happybase
+
+   connection = happybase.Connection('hostname')
+   table = connection.table('table-name')
+
+   table.put('row-key', {'family:qual1': 'value1',
+                         'family:qual2': 'value2'})
+
+   row = table.row('row-key')
+   print row['family:qual1']  # prints 'value1'
+
+   for key, data in table.rows(['row-key-1', 'row-key-2']):
+       print key, data  # prints row key and data for each row
+
+   for key, data in table.scan(row_prefix='row'):
+       print key, data  # prints 'value1' and 'value2'
+
+   row = table.delete('row-key')
+
+
+Core documentation
+==================
+
+.. toctree::
+   :maxdepth: 2
+
+   installation
+   user
+   api
+
+
+Additional documentation
+========================
 
 .. toctree::
    :maxdepth: 1
 
-   introduction
-   installation
-   tutorial
-   api
    news
    development
    todo
+   faq
    license
 
 
-.. rubric:: External links
+External links
+==============
 
-* `Documentation <http://happybase.readthedocs.org/>`_ (readthedocs.org)
+* `Online documentation <http://happybase.readthedocs.org/>`_ (Read the Docs)
 * `Downloads <http://pypi.python.org/pypi/happybase/>`_ (PyPI)
 * `Source code <https://github.com/wbolster/happybase>`_ (Github)
 
 
-.. rubric:: Indices and tables
+Indices and tables
+==================
 
 * :ref:`genindex`
 * :ref:`modindex`

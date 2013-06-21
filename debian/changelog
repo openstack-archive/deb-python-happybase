@@ -1,6 +1,6 @@
 python-happybase (0.6-1) unstable; urgency=low
 
-  * New upstream release.
+  * New upstream release (Closes: #712971).
   * Ran wrap-and-sort.
 
  -- Thomas Goirand <zigo@debian.org>  Thu, 30 May 2013 13:56:42 +0800

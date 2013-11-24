@@ -3,8 +3,7 @@
 #export DH_VERBOSE=1
 
 UPSTREAM_GIT = git://github.com/wbolster/happybase.git
-
-include /usr/share/openstack-pkg-tools/pkgos.make
+-include /usr/share/openstack-pkg-tools/pkgos.make
 
 PYTHONS:=$(shell pyversions -vr)
 

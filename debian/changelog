@@ -2,6 +2,7 @@ python-happybase (0.7-1) unstable; urgency=low
 
   * New upstream release (Closes: #730368).
   * Drops python-nosexcover as its not being used by the tests.
+  * Do not build-depends on openstack-pkg-tools anymore.
 
  -- Thomas Goirand <zigo@debian.org>  Sat, 19 Oct 2013 22:59:58 +0800
 

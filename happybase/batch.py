@@ -18,7 +18,7 @@ class Batch(object):
     instead.
     """
     def __init__(self, table, timestamp=None, batch_size=None,
-                 transaction=False):
+                 transaction=False, wal=True):
         """Initialise a new Batch instance."""
         if not (timestamp is None or isinstance(timestamp, Integral)):
             raise TypeError("'timestamp' must be an integer or None")
@@ -34,6 +34,7 @@ class Batch(object):
         self._batch_size = batch_size
         self._timestamp = timestamp
         self._transaction = transaction
+        self._wal = wal
         self._families = None
         self._reset_mutations()
 
@@ -51,10 +52,10 @@ class Batch(object):
         logger.debug("Sending batch for '%s' (%d mutations on %d rows)",
                      self._table.name, self._mutation_count, len(bms))
         if self._timestamp is None:
-            self._table.connection.client.mutateRows(self._table.name, bms)
+            self._table.connection.client.mutateRows(self._table.name, bms, {})
         else:
             self._table.connection.client.mutateRowsTs(
-                self._table.name, bms, self._timestamp)
+                self._table.name, bms, self._timestamp, {})
 
         self._reset_mutations()
 
@@ -62,37 +63,52 @@ class Batch(object):
     # Mutation methods
     #
 
-    def put(self, row, data):
+    def put(self, row, data, wal=None):
         """Store data in the table.
 
-        See :py:meth:`Table.put` for a description of the `row` and `data`
-        arguments.
+        See :py:meth:`Table.put` for a description of the `row`, `data`,
+        and `wal` arguments. The `wal` argument should normally not be
+        used; its only use is to override the batch-wide value passed to
+        :py:meth:`Table.batch`.
         """
+        if wal is None:
+            wal = self._wal
+
         self._mutations[row].extend(
-            Mutation(isDelete=False, column=column, value=value)
+            Mutation(
+                isDelete=False,
+                column=column,
+                value=value,
+                writeToWAL=wal)
             for column, value in data.iteritems())
 
         self._mutation_count += len(data)
         if self._batch_size and self._mutation_count >= self._batch_size:
             self.send()
 
-    def delete(self, row, columns=None):
+    def delete(self, row, columns=None, wal=None):
         """Delete data from the table.
 
-        See :py:meth:`Table.delete` for a description of the `row` and
-        `columns` arguments.
+        See :py:meth:`Table.put` for a description of the `row`, `data`,
+        and `wal` arguments. The `wal` argument should normally not be
+        used; its only use is to override the batch-wide value passed to
+        :py:meth:`Table.batch`.
         """
         # Work-around Thrift API limitation: the mutation API can only
         # delete specified columns, not complete rows, so just list the
-        # column families once and cache them for later use in the same
-        # transaction.
+        # column families once and cache them for later use by the same
+        # batch instance.
         if columns is None:
             if self._families is None:
                 self._families = self._table._column_family_names()
             columns = self._families
 
+        if wal is None:
+            wal = self._wal
+
         self._mutations[row].extend(
-            Mutation(isDelete=True, column=column) for column in columns)
+            Mutation(isDelete=True, column=column, writeToWAL=wal)
+            for column in columns)
 
         self._mutation_count += len(columns)
         if self._batch_size and self._mutation_count >= self._batch_size:

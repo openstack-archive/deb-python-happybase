@@ -13,7 +13,7 @@ Build-Depends-Indep: python-coverage,
                      python-nose,
                      python-sphinx,
                      python-thrift
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=openstack/python-happybase.git
 Vcs-Git: git://anonscm.debian.org/openstack/python-happybase.git
 Homepage: https://github.com/wbolster/happybase

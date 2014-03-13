@@ -1,6 +1,7 @@
 python-happybase (0.8-1) experimental; urgency=medium
 
   * New upstream release.
+  * Standards-Version is now 3.9.5.
 
  -- Thomas Goirand <zigo@debian.org>  Fri, 14 Mar 2014 00:36:44 +0800
 

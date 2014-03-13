@@ -8,7 +8,7 @@ from operator import attrgetter
 from struct import Struct
 
 from .hbase.ttypes import TScan
-from .util import thrift_type_to_dict, str_increment
+from .util import thrift_type_to_dict, str_increment, OrderedDict
 from .batch import Batch
 
 logger = logging.getLogger(__name__)
@@ -22,6 +22,14 @@ def make_row(cell_map, include_timestamp):
     """Make a row dict for a cell mapping like ttypes.TRowResult.columns."""
     cellfn = include_timestamp and make_cell_timestamp or make_cell
     return dict((cn, cellfn(cell)) for cn, cell in cell_map.iteritems())
+
+
+def make_ordered_row(sorted_columns, include_timestamp):
+    """Make a row dict for sorted column results from scans."""
+    cellfn = include_timestamp and make_cell_timestamp or make_cell
+    return OrderedDict(
+        (column.columnName, cellfn(column.cell))
+        for column in sorted_columns)
 
 
 class Table(object):
@@ -50,13 +58,14 @@ class Table(object):
         descriptors = self.connection.client.getColumnDescriptors(self.name)
         families = dict()
         for name, descriptor in descriptors.items():
-            name = name[:-1]  # drop trailing ':'
+            name = name.rstrip(':')
             families[name] = thrift_type_to_dict(descriptor)
         return families
 
     def _column_family_names(self):
         """Retrieve the column family names for this table (internal use)"""
-        return self.connection.client.getColumnDescriptors(self.name).keys()
+        names = self.connection.client.getColumnDescriptors(self.name).keys()
+        return [name.rstrip(':') for name in names]
 
     def regions(self):
         """Retrieve the regions for this table.
@@ -184,10 +193,10 @@ class Table(object):
         if versions is None:
             versions = (2 ** 31) - 1  # Thrift type is i32
         elif not isinstance(versions, int):
-            raise TypeError("'versions' parameter must be a number or None")
+            raise TypeError("'versions' argument must be a number or None")
         elif versions < 1:
             raise ValueError(
-                "'versions' parameter must be at least 1 (or None)")
+                "'versions' argument must be at least 1 (or None)")
 
         if timestamp is None:
             cells = self.connection.client.getVer(
@@ -205,7 +214,8 @@ class Table(object):
 
     def scan(self, row_start=None, row_stop=None, row_prefix=None,
              columns=None, filter=None, timestamp=None,
-             include_timestamp=False, batch_size=1000, limit=None):
+             include_timestamp=False, batch_size=1000, scan_batching=None,
+             limit=None, sorted_columns=False):
         """Create a scanner for data in the table.
 
         This method returns an iterable that can be used for looping over the
@@ -240,9 +250,28 @@ class Table(object):
         this to a low value (or even 1) if your data is large, since a low
         batch size results in added round-trips to the server.
 
-        **Compatibility note:** The `filter` argument is only available when
-        using HBase 0.92 (or up). In HBase 0.90 compatibility mode, specifying
-        a `filter` raises an exception.
+        The optional `scan_batching` is for advanced usage only; it
+        translates to `Scan.setBatching()` at the Java side (inside the
+        Thrift server). By setting this value rows may be split into
+        partial rows, so result rows may be incomplete, and the number
+        of results returned by te scanner may no longer correspond to
+        the number of rows matched by the scan.
+
+        If `sorted_columns` is `True`, the columns in the rows returned
+        by this scanner will be retrieved in sorted order, and the data
+        will be stored in `OrderedDict` instances.
+
+        **Compatibility notes:**
+
+        * The `filter` argument is only available when using HBase 0.92
+          (or up). In HBase 0.90 compatibility mode, specifying
+          a `filter` raises an exception.
+
+        * The `sorted_columns` argument is only available when using
+          HBase 0.96 (or up).
+
+        .. versionadded:: 0.8
+           `sorted_columns` argument
 
         :param str row_start: the row key to start at (inclusive)
         :param str row_stop: the row key to stop at (exclusive)
@@ -252,6 +281,9 @@ class Table(object):
         :param int timestamp: timestamp (optional)
         :param bool include_timestamp: whether timestamps are returned
         :param int batch_size: batch size for retrieving resuls
+        :param bool scan_batching: server-side scan batching (optional)
+        :param int limit: max number of rows to return
+        :param bool sorted_columns: whether to return sorted columns
 
         :return: generator yielding the rows matching the scan
         :rtype: iterable of `(row_key, row_data)` tuples
@@ -261,6 +293,10 @@ class Table(object):
 
         if limit is not None and limit < 1:
             raise ValueError("'limit' must be >= 1")
+
+        if sorted_columns and self.connection.compat < '0.96':
+            raise NotImplementedError(
+                "'sorted_columns' is not supported in HBase >= 0.96")
 
         if row_prefix is not None:
             if row_start is not None or row_stop is not None:
@@ -299,10 +335,25 @@ class Table(object):
                         self.name, row_start, row_stop, columns, timestamp, {})
 
         else:
-            # The scan's caching size is set to the batch_size, so that
-            # the HTable on the Java side retrieves rows from the region
-            # servers in the same chunk sizes that it sends out over
-            # Thrift.
+            # XXX: The "batch_size" can be slightly confusing to those
+            # familiar with the HBase Java API:
+            #
+            # * TScan.caching (Thrift API) translates to
+            #   Scan.setCaching() (Java API)
+            #
+            # * TScan.batchSize (Thrift API) translates to
+            #   Scan.setBatching (Java API) .
+            #
+            # However, we set Scan.setCaching() to what is called
+            # batch_size in the HappyBase API, so that the HTable on the
+            # Java side (inside the Thrift server) retrieves rows from
+            # the region servers in the same chunk sizes that it sends
+            # out again to Python (over Thrift). This cannot be tweaked
+            # (by design).
+            #
+            # The Scan.setBatching() value (Java API), which possibly
+            # cuts rows into multiple partial rows, can be set using the
+            # slightly strange name scan_batching.
             scan = TScan(
                 startRow=row_start,
                 stopRow=row_stop,
@@ -310,7 +361,8 @@ class Table(object):
                 columns=columns,
                 caching=batch_size,
                 filterString=filter,
-                batchSize=batch_size,
+                batchSize=scan_batching,
+                sortColumns=sorted_columns,
             )
             scan_id = self.connection.client.scannerOpenWithScan(
                 self.name, scan, {})
@@ -334,7 +386,14 @@ class Table(object):
                 n_fetched += len(items)
 
                 for n_returned, item in enumerate(items, n_returned + 1):
-                    yield item.row, make_row(item.columns, include_timestamp)
+                    if sorted_columns:
+                        row = make_ordered_row(item.sortedColumns,
+                                               include_timestamp)
+                    else:
+                        row = make_row(item.columns, include_timestamp)
+
+                    yield item.row, row
+
                     if limit is not None and n_returned == limit:
                         return
 
@@ -364,7 +423,7 @@ class Table(object):
         method to manipulate data.
 
         .. versionadded:: 0.7
-           `wal` parameter
+           `wal` argument
 
         :param str row: the row key
         :param dict data: the data to store
@@ -384,7 +443,7 @@ class Table(object):
         method to manipulate data.
 
         .. versionadded:: 0.7
-           `wal` parameter
+           `wal` argument
 
         :param str row: the row key
         :param list_or_tuple columns: list of columns (optional)
@@ -420,7 +479,7 @@ class Table(object):
         :py:meth:`Batch.delete`.
 
         .. versionadded:: 0.7
-           `wal` parameter
+           `wal` argument
 
         :param bool transaction: whether this batch should behave like
                                  a transaction (only useful when used as a

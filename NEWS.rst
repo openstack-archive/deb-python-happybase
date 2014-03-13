@@ -4,6 +4,29 @@ Version history
 .. py:currentmodule:: happybase
 
 
+HappyBase 0.8
+-------------
+
+Release date: 2014-02-25
+
+* Add (and default to) '0.96' compatibility mode in :py:class:`Connection`.
+
+* Add support for retrieving sorted columns, which is possible with the HBase
+  0.96 Thrift API. This feature uses a new `sorted_columns` argument to
+  :py:meth:`Table.scan`. An ```OrderedDict`` implementation is required for this
+  feature; with Python 2.7 this is available from the standard library, but for
+  Python 2.6 a separate ```ordereddict``` pacakge has to be installed from PyPI.
+  (`issue #39 <https://github.com/wbolster/happybase/issues/39>`_)
+
+* The `batch_size` argument to :py:meth:`Table.scan` is no longer propagated to
+  `Scan.setBatching()` at the Java side (inside the Thrift server). To influence
+  the `Scan.setBatching()` (which may split rows into partial rows) a new
+  `scan_batching` argument to :py:meth:`Table.scan` has been added. See `issue
+  #54 <https://github.com/wbolster/happybase/issues/54>`_, `issue #56
+  <https://github.com/wbolster/happybase/issues/56>`_, and the HBase docs for
+  `Scan.setBatching()` for more details.
+
+
 HappyBase 0.7
 -------------
 
@@ -12,7 +35,7 @@ Release date: 2013-11-06
 * Added a `wal` argument to various data manipulation methods on the
   :py:class:`Table` and :py:class:`Batch` classes to determine whether to write
   the mutation to the Write-Ahead Log (WAL). (`issue #36
-  <https://github.com/wbolster/happybase/issues/36>`_).
+  <https://github.com/wbolster/happybase/issues/36>`_)
 
 * Pass batch_size to underlying Thrift Scan instance (`issue #38
   <https://github.com/wbolster/happybase/issues/38>`_).

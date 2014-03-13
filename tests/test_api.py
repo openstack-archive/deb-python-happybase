@@ -14,6 +14,7 @@ from nose.tools import (
     assert_in,
     assert_is_instance,
     assert_is_not_none,
+    assert_list_equal,
     assert_not_in,
     assert_raises,
     assert_true,
@@ -23,7 +24,7 @@ from happybase import Connection, ConnectionPool, NoConnectionsAvailable
 
 HAPPYBASE_HOST = os.environ.get('HAPPYBASE_HOST')
 HAPPYBASE_PORT = os.environ.get('HAPPYBASE_PORT')
-HAPPYBASE_COMPAT = os.environ.get('HAPPYBASE_COMPAT', '0.92')
+HAPPYBASE_COMPAT = os.environ.get('HAPPYBASE_COMPAT', '0.96')
 HAPPYBASE_TRANSPORT = os.environ.get('HAPPYBASE_TRANSPORT', 'buffered')
 KEEP_TABLE = ('HAPPYBASE_NO_CLEANUP' in os.environ)
 
@@ -273,7 +274,6 @@ def test_row():
     exp = {'cf1:col1': 'v1new',
            'cf1:col2': 'v2'}
     assert_dict_equal(exp, row(row_key, ['cf1']))
-    assert_dict_equal(exp, row(row_key, ['cf1:']))
 
     exp = {'cf1:col1': 'v1new',
            'cf2:col2': 'v4'}
@@ -426,6 +426,31 @@ def test_scan():
     scanner.close()
     with assert_raises(StopIteration):
         next(scanner)
+
+
+def test_scan_sorting():
+    if connection.compat < '0.96':
+        return  # not supported
+
+    input_row = {}
+    for i in xrange(100):
+        input_row['cf1:col-%03d' % i] = ''
+    input_key = 'row-scan-sorted'
+    table.put(input_key, input_row)
+
+    scan = table.scan(row_start=input_key, sorted_columns=True)
+    key, row = next(scan)
+    assert_equal(key, input_key)
+    assert_list_equal(
+        sorted(input_row.items()),
+        row.items())
+
+
+def test_scan_filter_and_batch_size():
+    # See issue #54 and #56
+    filter = "SingleColumnValueFilter ('cf1', 'qual1', =, 'binary:val1')"
+    for k, v in table.scan(filter=filter):
+        print v
 
 
 def test_delete():

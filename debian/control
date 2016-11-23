@@ -6,7 +6,7 @@ Uploaders: Julien Danjou <acid@debian.org>,
            Thomas Goirand <zigo@debian.org>,
            Ghe Rivero <ghe.rivero@stackops.com>,
            Mehdi Abaakouk <sileht@sileht.net>
-Build-Depends: debhelper (>= 9),
+Build-Depends: debhelper (>= 10),
                python-all (>= 2.6.6-3~),
                python-setuptools
 Build-Depends-Indep: python-coverage,
